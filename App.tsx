@@ -8,10 +8,11 @@ import Intro from "./src/pages/intro";
 import PhoneControl from "./src/pages/phoneControl";
 
 import { NativeBaseProvider } from "native-base";
+import Home from "./src/pages/home";
 const App = () => {
   return (
     <NativeBaseProvider>
-      <Intro />
+      <Home />
     </NativeBaseProvider>
   )
 }
