@@ -1,23 +1,33 @@
 import React from 'react';
 import {Image, View} from 'react-native';
-import {Center, Button} from 'native-base';
+import {Center, Button, NativeBaseProvider} from 'native-base';
 import styles from './intro.style';
 const Intro = props => {
+  const navigateToLogin = () => props.navigation.navigate('loginScreen');
+  const navigateToRegister = () => props.navigation.navigate('registerScreen');
+
   return (
-    <Center>
-      <Image source={require('../../assets/images/login-logo.png')} />
-      <View>
-        <Button
-          colorScheme="success"
-          borderRadius={'2xl'}
-          style={styles.button}>
-          Login
-        </Button>
-        <Button variant="outline" colorScheme="success" borderRadius={'2xl'}>
-          Register
-        </Button>
-      </View>
-    </Center>
+    <NativeBaseProvider>
+      <Center>
+        <Image source={require('../../assets/images/login-logo.png')} />
+        <View>
+          <Button
+            colorScheme="success"
+            borderRadius={'2xl'}
+            style={styles.button}
+            onPress={navigateToLogin}>
+            Login
+          </Button>
+          <Button
+            variant="outline"
+            colorScheme="success"
+            borderRadius={'2xl'}
+            onPress={navigateToRegister}>
+            Register
+          </Button>
+        </View>
+      </Center>
+    </NativeBaseProvider>
   );
 };
 

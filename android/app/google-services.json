@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "263386323181",
+    "project_id": "barberbooking-b64e5",
+    "storage_bucket": "barberbooking-b64e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263386323181:android:28e94076b2d5db2e1f54e4",
+        "android_client_info": {
+          "package_name": "com.barberbookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263386323181-luj2c0ohpdd1o7ecj18d909fdaf9dm8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLFY7MbQjm5NCtgr2iJwSjeVG2f1aSuP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263386323181-luj2c0ohpdd1o7ecj18d909fdaf9dm8e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263386323181:android:8d1b6f9d9094cd5f1f54e4",
+        "android_client_info": {
+          "package_name": "com.barbertestsidar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263386323181-luj2c0ohpdd1o7ecj18d909fdaf9dm8e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLFY7MbQjm5NCtgr2iJwSjeVG2f1aSuP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263386323181-luj2c0ohpdd1o7ecj18d909fdaf9dm8e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
