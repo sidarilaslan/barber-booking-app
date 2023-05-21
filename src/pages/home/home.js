@@ -1,5 +1,12 @@
 import React from 'react';
-import {FlatList, Input, SearchIcon, VStack, Heading} from 'native-base';
+import {
+  FlatList,
+  Input,
+  SearchIcon,
+  VStack,
+  Heading,
+  NativeBaseProvider,
+} from 'native-base';
 import ServiceCard from '../../components/serviceCard';
 
 const Home = () => {
@@ -22,32 +29,34 @@ const Home = () => {
   ];
 
   return (
-    <VStack>
-      <Input
-        placeholder="Search"
-        margin={4}
-        fontSize={16}
-        variant="filled"
-        borderRadius={10}
-        backgroundColor="#f1f1f1"
-        InputLeftElement={<SearchIcon marginLeft={4} size={6} />}
-      />
-      <Heading marginLeft={4}>Services</Heading>
-      <FlatList
-        data={data}
-        renderItem={({item}) => (
-          <ServiceCard
-            imageUrl={item.imageUrl}
-            serviceName={item.serviceName}
-            stylistName={item.stylistName}
-            price={item.price}
-            onClickPriceButton={() => {
-              console.log('Clicked!');
-            }}
-          />
-        )}
-      />
-    </VStack>
+    <NativeBaseProvider>
+      <VStack>
+        <Input
+          placeholder="Search"
+          margin={4}
+          fontSize={16}
+          variant="filled"
+          borderRadius={10}
+          backgroundColor="#f1f1f1"
+          InputLeftElement={<SearchIcon marginLeft={4} size={6} />}
+        />
+        <Heading marginLeft={4}>Services</Heading>
+        <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <ServiceCard
+              imageUrl={item.imageUrl}
+              serviceName={item.serviceName}
+              stylistName={item.stylistName}
+              price={item.price}
+              onClickPriceButton={() => {
+                console.log('Clicked!');
+              }}
+            />
+          )}
+        />
+      </VStack>
+    </NativeBaseProvider>
   );
 };
 
