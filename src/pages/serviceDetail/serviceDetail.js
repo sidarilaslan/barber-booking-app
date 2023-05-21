@@ -1,6 +1,7 @@
 import React from 'react';
-import {Image, Text, TouchableHighlight, View} from 'react-native';
+import {Image, Text, View} from 'react-native';
 import styles from './serviceDetail.style';
+import CustomButton from '../../components/customButton';
 
 const ServiceDetail = () => {
   const imageUrl =
@@ -35,12 +36,7 @@ const ServiceDetail = () => {
           </Text>
         </View>
       </View>
-      <TouchableHighlight
-        style={styles.book_button}
-        underlayColor="#61A1E5FF"
-        onPress={() => {}}>
-        <Text style={styles.book_button_text}>Randevu Oluştur</Text>
-      </TouchableHighlight>
+      <CustomButton buttonText="Randevu Oluşturs" onClick={() => {}} />
     </View>
   );
 };
