@@ -1,19 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import {Image, View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import {Center, Button, Input, Stack, NativeBaseProvider} from 'native-base';
-import {Formik} from 'formik';
+import { Center, Button, Input, Stack, NativeBaseProvider } from 'native-base';
+import { Formik } from 'formik';
 
 import styles from './login.style';
+import { setUserData } from '../../../redux/reducers/userReducer';
 
 const Login = props => {
+  const navigateToHome = () => props.navigation.navigate('homeScreen');
   const [confirm, setConfirm] = useState(null);
-  const handleLogin = values => {
-    // console.log(values.code);
+  const dispatch = useDispatch();
+  const handleLogin = async (values) => {
     if (!confirm) {
       signInWithPhoneNumber(`+90 ${values.phoneNumber}`);
     } else {
       confirmCode(values.code);
+      dispatch(setUserData(values.phoneNumber));
+      navigateToHome();
     }
   };
 
@@ -37,8 +42,10 @@ const Login = props => {
       console.log(code);
       await confirm.confirm(code);
       console.log('success');
+      return true;
     } catch (error) {
       console.log('Invalid code.');
+      return false;
     }
   };
 
@@ -52,7 +59,7 @@ const Login = props => {
             code: '',
           }}
           onSubmit={handleLogin}>
-          {({handleChange, handleSubmit, values}) => (
+          {({ handleChange, handleSubmit, values }) => (
             <Stack space={4} maxW="500px">
               {confirm ? (
                 <>
