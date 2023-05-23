@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   Input,
@@ -10,10 +10,21 @@ import {
 import ServiceCard from '../../components/serviceCard';
 
 const Home = () => {
+  const renderService = ({ item }) => (
+    <ServiceCard
+      imageUrl={item.imageUrl}
+      serviceName={item.serviceName}
+      stylistName={item.stylistName}
+      price={item.price}
+      onClickPriceButton={() => {
+        console.log('Clicked!');
+      }}
+    />
+  )
   const data = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      serviceName: 'Saç Sakal Yıkama',
+      serviceName: 'Saç Yıkama',
       stylistName: 'Sidar İlaslan',
       price: 40,
       imageUrl:
@@ -21,17 +32,27 @@ const Home = () => {
     },
     {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      serviceName: 'Saç Sakal',
+      serviceName: 'Sakal kesim',
       stylistName: 'Suat Zengin',
       price: 35,
       imageUrl: 'https://i.ytimg.com/vi/7dKZXDpdMWU/hqdefault.jpg',
     },
+
   ];
+  const [filteredServices, setFilteredServices] = useState(data);
+
+  const handleSearch = (query) => {
+    const filtered = data.filter((service) =>
+      service.serviceName.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredServices(filtered);
+  };
 
   return (
     <NativeBaseProvider>
       <VStack>
         <Input
+          onChangeText={handleSearch}
           placeholder="Search"
           margin={4}
           fontSize={16}
@@ -42,18 +63,8 @@ const Home = () => {
         />
         <Heading marginLeft={4}>Services</Heading>
         <FlatList
-          data={data}
-          renderItem={({item}) => (
-            <ServiceCard
-              imageUrl={item.imageUrl}
-              serviceName={item.serviceName}
-              stylistName={item.stylistName}
-              price={item.price}
-              onClickPriceButton={() => {
-                console.log('Clicked!');
-              }}
-            />
-          )}
+          data={filteredServices}
+          renderItem={renderService}
         />
       </VStack>
     </NativeBaseProvider>
