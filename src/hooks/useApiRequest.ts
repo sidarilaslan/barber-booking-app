@@ -1,24 +1,22 @@
-import {useState} from 'react';
-import axios, {AxiosRequestConfig} from 'axios';
+import { useState, useEffect } from 'react';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-const useApiRequest = () => {
-  const [responseData, setresponseData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const useApiRequest = (config: AxiosRequestConfig) => {
+  const [results, setResults] = useState<AxiosResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const sendRequest = async (config: AxiosRequestConfig) => {
-    setLoading(true);
-    try {
-      const response = await axios(config);
-      setresponseData(response.data);
-      setLoading(false);
-    } catch (error: any) {
-      setError(error);
-      setLoading(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios.request(config)
+        .then(response => setResults(response))
+        .catch(err => setError(err))
+        .finally(() => setLoading(false));
     }
-  };
+    fetchData();
+  }, []);
 
-  return {responseData, loading, error, sendRequest};
+  return [results, error, loading];
 };
 
 export default useApiRequest;
