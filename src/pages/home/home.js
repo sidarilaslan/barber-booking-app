@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import useApiRequest from '../../hooks/useApiRequest';
 import {
   FlatList,
   Input,
@@ -10,40 +11,39 @@ import {
 import ServiceCard from '../../components/serviceCard';
 
 const Home = () => {
+  const [data, setData] = useState([]);
+  const [filteredServices, setFilteredServices] = useState(data);
+  const [results, error, loading] = useApiRequest({
+    url: "http://10.0.2.2:5000/service/getall",
+    method: "get"
+  });
+
+
   const renderService = ({ item }) => (
+
+
     <ServiceCard
-      imageUrl={item.imageUrl}
-      serviceName={item.serviceName}
-      stylistName={item.stylistName}
+      imageUrl={item.worker_id.imageUrl}
+      serviceName={item.name}
+      stylistName={`${item.worker_id.user_id.name} ${item.worker_id.user_id.lastName}`}
       price={item.price}
+      points={item.worker_id.points}
       onClickPriceButton={() => {
-        console.log('Clicked!');
+        console.log("Clicked!");
       }}
     />
   )
-  const data = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      serviceName: 'Saç Yıkama',
-      stylistName: 'Sidar İlaslan',
-      price: 40,
-      imageUrl:
-        'https://miro.medium.com/v2/resize:fit:1400/1*XocQvssh4q9IJmfROJZsvQ.jpeg',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      serviceName: 'Sakal kesim',
-      stylistName: 'Suat Zengin',
-      price: 35,
-      imageUrl: 'https://i.ytimg.com/vi/7dKZXDpdMWU/hqdefault.jpg',
-    },
+  useEffect(() => {
+    if (results?.data) {
+      setData(results.data);
+      setFilteredServices(results.data);
+    }
+  }, [results?.data]);
 
-  ];
-  const [filteredServices, setFilteredServices] = useState(data);
 
   const handleSearch = (query) => {
-    const filtered = data.filter((service) =>
-      service.serviceName.toLowerCase().includes(query.toLowerCase())
+    const filtered = data.filter((filteredServices) =>
+      filteredServices.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredServices(filtered);
   };
