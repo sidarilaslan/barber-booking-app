@@ -1,10 +1,12 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import introComponent from '../pages/intro';
 import loginComponent from '../pages/auth/login';
 import registerComponent from '../pages/auth/register';
+import homeComponent from '../pages/home';
+
 
 const Stack = createNativeStackNavigator();
 const WelcomeStack = () => {
@@ -16,6 +18,8 @@ const WelcomeStack = () => {
       <Stack.Screen name="introScreen" component={introComponent} />
       <Stack.Screen name="loginScreen" component={loginComponent} />
       <Stack.Screen name="registerScreen" component={registerComponent} />
+      <Stack.Screen name="homeScreen" component={homeComponent} />
+
     </Stack.Navigator>
   );
 };
