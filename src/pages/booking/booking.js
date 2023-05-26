@@ -1,5 +1,5 @@
 import {React, useState} from 'react';
-import {Image, Text, TextInput, View} from 'react-native';
+import {Image, ScrollView, Text, TextInput, View} from 'react-native';
 import styles from './booking.style';
 import DatePicker from 'react-native-date-picker';
 import CustomButton from '../../components/customButton';
@@ -13,7 +13,7 @@ const Booking = () => {
 
   return (
     <NativeBaseProvider>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.header}>
           <Image
             source={{
@@ -31,6 +31,7 @@ const Booking = () => {
             date={date}
             onDateChange={setDate}
             style={styles.date_picker}
+            minimumDate={new Date()}
           />
           <Text style={styles.choose_datetime_label}>
             Lütfen Ek İsteklerinizi Yazınız
@@ -52,7 +53,7 @@ const Booking = () => {
             console.log('date-time: ' + date);
           }}
         />
-      </View>
+      </ScrollView>
     </NativeBaseProvider>
   );
 };
