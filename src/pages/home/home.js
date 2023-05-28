@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import useApiRequest from '../../hooks/useApiRequest';
 import {
   FlatList,
@@ -9,19 +9,17 @@ import {
   NativeBaseProvider,
 } from 'native-base';
 import ServiceCard from '../../components/serviceCard';
+import {ActivityIndicator, StatusBar} from 'react-native';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [data, setData] = useState([]);
   const [filteredServices, setFilteredServices] = useState(data);
   const [results, error, loading] = useApiRequest({
-    url: "http://10.0.2.2:5000/service/getall",
-    method: "get"
+    url: 'http://192.168.1.35:5000/service/getall',
+    method: 'get',
   });
 
-
-  const renderService = ({ item }) => (
-
-
+  const renderService = ({item}) => (
     <ServiceCard
       imageUrl={item.worker_id.imageUrl}
       serviceName={item.name}
@@ -29,10 +27,10 @@ const Home = () => {
       price={item.price}
       points={item.worker_id.points}
       onClickPriceButton={() => {
-        console.log("Clicked!");
+        navigation.navigate('serviceDetailScreen', item);
       }}
     />
-  )
+  );
   useEffect(() => {
     if (results?.data) {
       setData(results.data);
@@ -40,17 +38,17 @@ const Home = () => {
     }
   }, [results?.data]);
 
-
-  const handleSearch = (query) => {
-    const filtered = data.filter((filteredServices) =>
-      filteredServices.name.toLowerCase().includes(query.toLowerCase())
+  const handleSearch = query => {
+    const filtered = data.filter(filteredServices =>
+      filteredServices.name.toLowerCase().includes(query.toLowerCase()),
     );
     setFilteredServices(filtered);
   };
 
   return (
     <NativeBaseProvider>
-      <VStack>
+      <VStack flex={1} backgroundColor={'#FFFFFF'}>
+        <StatusBar backgroundColor="white" barStyle={'dark-content'} />
         <Input
           onChangeText={handleSearch}
           placeholder="Search"
@@ -62,10 +60,11 @@ const Home = () => {
           InputLeftElement={<SearchIcon marginLeft={4} size={6} />}
         />
         <Heading marginLeft={4}>Services</Heading>
-        <FlatList
-          data={filteredServices}
-          renderItem={renderService}
-        />
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <FlatList data={filteredServices} renderItem={renderService} />
+        )}
       </VStack>
     </NativeBaseProvider>
   );
