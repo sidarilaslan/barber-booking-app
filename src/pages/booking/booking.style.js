@@ -43,6 +43,10 @@ export default StyleSheet.create({
     alignSelf: 'center',
     marginTop: 16,
   },
+  request_input_label: {
+    alignSelf: 'center',
+    marginTop: 16,
+  },
   request_input: {
     margin: 16,
     borderRadius: 10,
@@ -55,5 +59,27 @@ export default StyleSheet.create({
   },
   request_input_unfocused: {
     backgroundColor: '#f1f1f1',
+  },
+  card_date_time: {
+    padding: 10,
+    margin: 16,
+    shadowColor: 'black',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    elevation: 2,
+  },
+  card_date_container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  card_date_label: {
+    flexDirection: 'row',
+    marginVertical: 8,
+  },
+  card_time_container: {
+    flexDirection: 'row',
+    marginVertical: 12,
   },
 });

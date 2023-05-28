@@ -1,15 +1,19 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, StatusBar, Text, View} from 'react-native';
 import styles from './serviceDetail.style';
 import CustomButton from '../../components/customButton';
 import {NativeBaseProvider} from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-const ServiceDetail = () => {
+const ServiceDetail = ({route, navigation}) => {
+  const service = route.params;
+
   const imageUrl =
     'https://images.unsplash.com/photo-1621607512022-6aecc4fed814?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3MjAxN3wwfDF8c2VhcmNofDIxfHxiYXJiZXJ8ZW58MHx8fHwxNjg0NDg2MTU3fDA&ixlib=rb-4.0.3&q=85&q=85&fmt=jpg&crop=entropy&cs=tinysrgb&w=450';
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
+        <StatusBar backgroundColor="black" barStyle={'light-content'} />
         <View style={styles.inner_container}>
           <Image
             style={styles.image}
@@ -19,26 +23,53 @@ const ServiceDetail = () => {
           />
           <View style={styles.service_info_container}>
             <View style={styles.service_header}>
-              <Text style={styles.service_title}>Saç Sakal ve Saç Yıkama</Text>
-              <Text>⭐ 4,5</Text>
+              <Text style={styles.service_title}>{service.name}</Text>
+              <View style={{flexDirection: 'row'}}>
+                <Icon name={'star'} size={20} color={'#f0df28'} solid />
+                <Text style={styles.point}>{service.worker_id.points}</Text>
+              </View>
             </View>
-            <Text style={styles.stylist_name}>Sidar İlaslan</Text>
-            <Text style={styles.stylist_availability}>Müsait</Text>
+            <View style={styles.username_view}>
+              <Icon name={'user'} size={20} color={'#000000'} solid />
+              <Text style={styles.stylist_name}>
+                {service.worker_id.user_id.name +
+                  ' ' +
+                  service.worker_id.user_id.lastName}{' '}
+              </Text>
+              <Text>(Stylist)</Text>
+            </View>
+            <View style={styles.availability_view}>
+              <Icon name={'check'} size={20} color={'#4BB543'} solid />
+              <Text style={styles.stylist_availability}>Müsait</Text>
+            </View>
           </View>
+          <Text style={styles.service_desc_label}>Açıklama</Text>
           <View style={styles.service_desc_container}>
-            <Text style={styles.service_desc}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. Lorem Ipsum is
-              simply dummy text of the printing and typesetting industry. Lorem
-              Ipsum has been the industry's standard dummy text ever since the
-              1500s, when an unknown printer took a galley of type and scrambled
-              it to make a type specimen book.
-            </Text>
+            <Text style={styles.service_desc}>{service.description}</Text>
           </View>
         </View>
-        <CustomButton buttonText="Randevu Oluştur" onClick={() => {}} />
+
+        <View style={styles.duration_and_money_view}>
+          <View style={styles.duration_view}>
+            <Icon name={'clock'} size={30} color={'#2e6fb4'} solid />
+            <Text style={styles.duration_price}>{service.duration}</Text>
+          </View>
+          <View style={styles.duration_view}>
+            <Icon name={'money-bill-wave'} size={30} color={'#2e6fb4'} solid />
+            <Text style={styles.text_price}>{service.price} TL</Text>
+          </View>
+        </View>
+
+        <CustomButton
+          buttonText="Randevu Oluştur"
+          onClick={() => {
+            navigation.navigate('bookingScreen', {
+              serviceId: service._id,
+              name: service.name,
+              worker_id: service.worker_id,
+            });
+          }}
+        />
       </View>
     </NativeBaseProvider>
   );
