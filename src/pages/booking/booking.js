@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   Image,
@@ -11,11 +11,14 @@ import {
 import styles from './booking.style';
 import DatePicker from 'react-native-date-picker';
 import CustomButton from '../../components/customButton';
-import {NativeBaseProvider} from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 import IconButton from '../../components/iconButton';
 import TimeCard from '../../components/timeCard';
+import useApiRequest from "../../hooks/useApiRequest";
+import { useSelector } from 'react-redux';
 
-const Booking = ({route, navigation}) => {
+
+const Booking = ({ route, navigation }) => {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [selectedDateText, setSelectedDateText] = useState('');
@@ -24,10 +27,38 @@ const Booking = ({route, navigation}) => {
     style: styles.request_input_unfocused,
   });
   const [input, setInput] = useState('');
-
-  const {serviceId, name: serviceName, worker_id: worker} = route.params;
+  const { serviceId, name: serviceName, worker_id: worker } = route.params;
   const stylistFullName = worker.user_id.name + ' ' + worker.user_id.lastName;
   const imageUrl = worker.imageUrl;
+  const [results, error, loading, useFetch] = useApiRequest();
+  const userData = useSelector((state) => state.user);
+
+  const handleBooking = async () => {
+    const requestData = {
+      serviceName,
+      stylistFullName,
+      serviceId,
+      worker,
+      selectedDateText,
+      input,
+      selectedTimeText,
+    };
+    await useFetch({
+      url: 'http://10.0.2.2:5000/booking',
+      method: 'post',
+      data: {
+        name: serviceName,
+        worker_id: worker._id,
+        requests: input,
+        hour: selectedTimeText,
+        date: date.toDateString(),
+        user_id: userData.user[0]._id
+      }
+    })
+
+    navigation.navigate('bookingSuccess', requestData);
+  }
+
 
   const checkSelectedDateText = text => {
     if (text !== '') {
@@ -45,7 +76,7 @@ const Booking = ({route, navigation}) => {
     return true;
   }
 
-  const renderItem = ({item}) => (
+  const renderItem = ({ item }) => (
     <TimeCard
       enabled={checkIsEnabled(item)}
       time={item.time}
@@ -55,6 +86,8 @@ const Booking = ({route, navigation}) => {
       }}
     />
   );
+
+
 
   return (
     <NativeBaseProvider>
@@ -84,7 +117,7 @@ const Booking = ({route, navigation}) => {
             style={[styles.request_input, inputState.style]}
             placeholder={'İsteklerini gir'}
             onFocus={() => {
-              setInputState({style: styles.request_input_focused});
+              setInputState({ style: styles.request_input_focused });
             }}
           />
           <Text style={styles.choose_datetime_label}>Tarih-Zaman Seç</Text>
@@ -108,7 +141,7 @@ const Booking = ({route, navigation}) => {
             <View style={styles.card_date_container}>
               <View style={styles.card_date_label}>
                 <Text>Date: </Text>
-                <Text style={{marginStart: 24, color: 'black'}}>
+                <Text style={{ marginStart: 24, color: 'black' }}>
                   {' '}
                   {checkSelectedDateText(selectedDateText)}{' '}
                 </Text>
@@ -124,7 +157,7 @@ const Booking = ({route, navigation}) => {
             </View>
             <View style={styles.card_time_container}>
               <Text>Time: </Text>
-              <Text style={{marginStart: 24, color: 'black'}}>
+              <Text style={{ marginStart: 24, color: 'black' }}>
                 {checkSelectedDateText(selectedTimeText)}
               </Text>
             </View>
@@ -142,19 +175,7 @@ const Booking = ({route, navigation}) => {
         </View>
         <CustomButton
           buttonText="Rezervasyon Yap"
-          onClick={() => {
-            const requestData = {
-              serviceName,
-              stylistFullName,
-              serviceId,
-              worker,
-              selectedDateText,
-              input,
-              selectedTimeText,
-            };
-            console.log(requestData);
-            navigation.navigate('bookingSuccess', requestData);
-          }}
+          onClick={handleBooking}
         />
       </ScrollView>
     </NativeBaseProvider>
@@ -211,5 +232,21 @@ const timeList = [
   {
     id: 20,
     time: '20:00',
+  },
+  {
+    id: 21,
+    time: '21:00',
+  },
+  {
+    id: 22,
+    time: '22:00',
+  },
+  {
+    id: 23,
+    time: '23:00',
+  },
+  {
+    id: 24,
+    time: '00:00',
   },
 ];
