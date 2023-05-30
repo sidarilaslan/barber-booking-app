@@ -1,50 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { Image, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, } from 'react';
+import { Image, View, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import auth from '@react-native-firebase/auth';
-import { Center, Button, Input, Stack, NativeBaseProvider } from 'native-base';
+import { Center, Button, Input, Stack, NativeBaseProvider, Spinner } from 'native-base';
 import { Formik } from 'formik';
-
 import styles from './login.style';
 import { setUserData } from '../../../redux/reducers/userReducer';
-
 const Login = props => {
-  const navigateToHome = () => props.navigation.navigate('homeScreen');
+
+  const navigateToHome = () => props.navigation.navigate('mainStack', { screen: "homeScreen" });
+  const [numberVerification, setnumberVerification] = useState(false);
+  const [codeVerification, setcodeVerification] = useState(false);
   const [confirm, setConfirm] = useState(null);
   const dispatch = useDispatch();
+
+
   const handleLogin = async (values) => {
     if (!confirm) {
-      signInWithPhoneNumber(`+90 ${values.phoneNumber}`);
+      setnumberVerification(true);
+      await signInWithPhoneNumber(`+90 ${values.phoneNumber}`);
+      setnumberVerification(false);
+
     } else {
-      confirmCode(values.code);
-      dispatch(setUserData(values.phoneNumber));
-      navigateToHome();
+      setcodeVerification(true);
+      const isConfirm = await confirmCode(values.code);
+      setcodeVerification(false);
+      if (isConfirm) {
+        dispatch(setUserData(values.phoneNumber));
+        navigateToHome();
+      }
     }
   };
 
-  const onAuthStateChanged = user => {
+  const onAuthStateChanged = (user) => {
     if (user) {
     }
   };
+
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  async function signInWithPhoneNumber(phoneNumber) {
+  const signInWithPhoneNumber = async (phoneNumber) => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-
     setConfirm(confirmation);
   }
 
-  const confirmCode = async code => {
+  const confirmCode = async (code) => {
     try {
-      console.log(code);
       await confirm.confirm(code);
-      console.log('success');
       return true;
     } catch (error) {
-      console.log('Invalid code.');
       return false;
     }
   };
@@ -77,8 +84,9 @@ const Login = props => {
                     colorScheme="success"
                     borderRadius={'xl'}
                     style={styles.button}
+                    disabled={codeVerification}
                     onPress={handleSubmit}>
-                    Code check
+                    {codeVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send code"}
                   </Button>
                 </>
               ) : (
@@ -97,8 +105,10 @@ const Login = props => {
                     colorScheme="success"
                     borderRadius={'xl'}
                     style={styles.button}
-                    onPress={handleSubmit}>
-                    Submit
+                    onPress={handleSubmit}
+                    disabled={numberVerification}
+                  >
+                    {numberVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send"}
                   </Button>
                 </>
               )}

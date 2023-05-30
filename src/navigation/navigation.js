@@ -1,6 +1,6 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import introComponent from '../pages/intro';
 import loginComponent from '../pages/auth/login';
@@ -48,8 +48,8 @@ const AppNavigator = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="mainStack" component={MainStack} />
         <Stack.Screen name="welcomeStack" component={WelcomeStack} />
+        <Stack.Screen name="mainStack" component={MainStack} />
       </Stack.Navigator>
     </NavigationContainer>
   );
