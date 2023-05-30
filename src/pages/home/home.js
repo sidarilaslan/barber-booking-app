@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import useApiRequest from '../../hooks/useApiRequest';
 import {
   FlatList,
@@ -9,17 +9,14 @@ import {
   NativeBaseProvider,
 } from 'native-base';
 import ServiceCard from '../../components/serviceCard';
-import {ActivityIndicator, StatusBar} from 'react-native';
+import { ActivityIndicator, StatusBar } from 'react-native';
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [filteredServices, setFilteredServices] = useState(data);
-  const [results, error, loading] = useApiRequest({
-    url: 'http://192.168.1.35:5000/service/getall',
-    method: 'get',
-  });
+  const [results, error, loading, useFetch] = useApiRequest();
 
-  const renderService = ({item}) => (
+  const renderService = ({ item }) => (
     <ServiceCard
       imageUrl={item.worker_id.imageUrl}
       serviceName={item.name}
@@ -31,6 +28,13 @@ const Home = ({navigation}) => {
       }}
     />
   );
+  useEffect(() => {
+    useFetch({
+      url: 'http://10.0.2.2:5000/service',
+      method: 'get'
+    });
+  }, []);
+
   useEffect(() => {
     if (results?.data) {
       setData(results.data);
