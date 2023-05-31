@@ -17,27 +17,29 @@ const Intro = props => {
   }, []);
   return (
     <NativeBaseProvider>
-      {loading ? <Loading /> : (
-        <Center>
-          <Image source={require('../../assets/images/login-logo.png')} />
-          <View>
-            <Button
-              colorScheme="success"
-              borderRadius={'2xl'}
-              style={styles.button}
-              onPress={navigateToLogin}>
-              Login
-            </Button>
-            <Button
-              variant="outline"
-              colorScheme="success"
-              borderRadius={'2xl'}
-              onPress={navigateToRegister}>
-              Register
-            </Button>
-          </View>
-        </Center>
-      )}
+      <View style={styles.container}>
+        {loading ? <Loading /> : (
+          <Center>
+            <Image source={require('../../assets/images/login-logo.png')} />
+            <View>
+              <Button
+                colorScheme="success"
+                borderRadius={'2xl'}
+                style={styles.button}
+                onPress={navigateToLogin}>
+                Login
+              </Button>
+              <Button
+                variant="outline"
+                colorScheme="success"
+                borderRadius={'2xl'}
+                onPress={navigateToRegister}>
+                Register
+              </Button>
+            </View>
+          </Center>
+        )}
+      </View>
     </NativeBaseProvider>
   );
 };

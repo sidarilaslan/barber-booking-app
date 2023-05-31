@@ -9,8 +9,8 @@ import { setUserData } from '../../../redux/reducers/userReducer';
 const Login = props => {
 
 
-  // const navigateToHome = () => props.navigation.navigate('mainStack', { screen: "homeScreen" });
-  const navigateToHome = () => props.navigation.navigate("bookingListScreen");  //test
+  const navigateToHome = () => props.navigation.navigate('mainStack', { screen: "homeStack" });
+
   const [numberVerification, setnumberVerification] = useState(false);
   const [codeVerification, setcodeVerification] = useState(false);
   const [confirm, setConfirm] = useState(null);
@@ -60,64 +60,66 @@ const Login = props => {
 
   return (
     <NativeBaseProvider>
-      <Center style={styles.container}>
-        <Image source={require('../../../assets/images/login-logo.png')} />
-        <Formik
-          initialValues={{
-            phoneNumber: '',
-            code: '',
-          }}
-          onSubmit={handleLogin}>
-          {({ handleChange, handleSubmit, values }) => (
-            <Stack space={4} maxW="500px">
-              {confirm ? (
-                <>
-                  <Input
-                    variant="rounded"
-                    placeholder="Code"
-                    value={values.code}
-                    onChangeText={handleChange('code')}
-                    w={{
-                      base: '75%',
-                      md: '25%',
-                    }}
-                  />
-                  <Button
-                    colorScheme="success"
-                    borderRadius={'xl'}
-                    style={styles.button}
-                    disabled={codeVerification}
-                    onPress={handleSubmit}>
-                    {codeVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send code"}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Input
-                    variant="rounded"
-                    placeholder="Phone Number"
-                    value={values.phoneNumber}
-                    onChangeText={handleChange('phoneNumber')}
-                    w={{
-                      base: '75%',
-                      md: '25%',
-                    }}
-                  />
-                  <Button
-                    colorScheme="success"
-                    borderRadius={'xl'}
-                    style={styles.button}
-                    onPress={handleSubmit}
-                    disabled={numberVerification}
-                  >
-                    {numberVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send"}
-                  </Button>
-                </>
-              )}
-            </Stack>
-          )}
-        </Formik>
-      </Center>
+      <View style={styles.container}>
+        <Center >
+          <Image source={require('../../../assets/images/login-logo.png')} />
+          <Formik
+            initialValues={{
+              phoneNumber: '',
+              code: '',
+            }}
+            onSubmit={handleLogin}>
+            {({ handleChange, handleSubmit, values }) => (
+              <Stack space={4} maxW="500px">
+                {confirm ? (
+                  <>
+                    <Input
+                      variant="rounded"
+                      placeholder="Code"
+                      value={values.code}
+                      onChangeText={handleChange('code')}
+                      w={{
+                        base: '75%',
+                        md: '25%',
+                      }}
+                    />
+                    <Button
+                      colorScheme="success"
+                      borderRadius={'xl'}
+                      style={styles.button}
+                      disabled={codeVerification}
+                      onPress={handleSubmit}>
+                      {codeVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send code"}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Input
+                      variant="rounded"
+                      placeholder="Phone Number"
+                      value={values.phoneNumber}
+                      onChangeText={handleChange('phoneNumber')}
+                      w={{
+                        base: '75%',
+                        md: '25%',
+                      }}
+                    />
+                    <Button
+                      colorScheme="success"
+                      borderRadius={'xl'}
+                      style={styles.button}
+                      onPress={handleSubmit}
+                      disabled={numberVerification}
+                    >
+                      {numberVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send"}
+                    </Button>
+                  </>
+                )}
+              </Stack>
+            )}
+          </Formik>
+        </Center>
+      </View>
     </NativeBaseProvider >
   );
 };
