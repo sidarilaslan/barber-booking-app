@@ -8,7 +8,9 @@ import styles from './login.style';
 import { setUserData } from '../../../redux/reducers/userReducer';
 const Login = props => {
 
-  const navigateToHome = () => props.navigation.navigate('mainStack', { screen: "homeScreen" });
+
+  // const navigateToHome = () => props.navigation.navigate('mainStack', { screen: "homeScreen" });
+  const navigateToHome = () => props.navigation.navigate("bookingListScreen");  //test
   const [numberVerification, setnumberVerification] = useState(false);
   const [codeVerification, setcodeVerification] = useState(false);
   const [confirm, setConfirm] = useState(null);
@@ -58,7 +60,7 @@ const Login = props => {
 
   return (
     <NativeBaseProvider>
-      <Center>
+      <Center style={styles.container}>
         <Image source={require('../../../assets/images/login-logo.png')} />
         <Formik
           initialValues={{
@@ -116,7 +118,7 @@ const Login = props => {
           )}
         </Formik>
       </Center>
-    </NativeBaseProvider>
+    </NativeBaseProvider >
   );
 };
 
