@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
   );
   useEffect(() => {
     useAxios({
-      url: 'http://10.0.2.2:5000/service',
+      url: 'http://192.168.1.38:5000/service',
       method: 'get'
     });
   }, []);

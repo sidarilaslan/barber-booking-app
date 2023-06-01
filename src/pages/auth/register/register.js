@@ -29,7 +29,7 @@ const Register = props => {
       setcodeVerification(false);
       if (isConfirm) {
         await useAxios({
-          url: 'http://10.0.2.2:5000/user',
+          url: 'http://192.168.1.38:5000/user',
           method: 'post',
           data: {
             name: values.name,
@@ -48,16 +48,6 @@ const Register = props => {
       dispatch(setUser(results.data));
     }
   }, [results?.data]);
-
-  const onAuthStateChanged = (user) => {
-    if (user) {
-    }
-  };
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
 
   const signInWithPhoneNumber = async (phoneNumber) => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);

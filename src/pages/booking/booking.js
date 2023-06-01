@@ -44,7 +44,7 @@ const Booking = ({ route, navigation }) => {
       selectedTimeText,
     };
     await useAxios({
-      url: 'http://10.0.2.2:5000/booking',
+      url: 'http://192.168.1.38:5000/booking',
       method: 'post',
       data: {
         name: serviceName,
