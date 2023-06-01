@@ -30,7 +30,7 @@ const Booking = ({ route, navigation }) => {
   const { serviceId, name: serviceName, worker_id: worker } = route.params;
   const stylistFullName = worker.user_id.name + ' ' + worker.user_id.lastName;
   const imageUrl = worker.imageUrl;
-  const [results, error, loading, useFetch] = useApiRequest();
+  const [results, error, loading, useAxios] = useApiRequest();
   const userData = useSelector((state) => state.user);
 
   const handleBooking = async () => {
@@ -43,7 +43,7 @@ const Booking = ({ route, navigation }) => {
       input,
       selectedTimeText,
     };
-    await useFetch({
+    await useAxios({
       url: 'http://10.0.2.2:5000/booking',
       method: 'post',
       data: {
@@ -52,7 +52,7 @@ const Booking = ({ route, navigation }) => {
         requests: input,
         hour: selectedTimeText,
         date: date.toDateString(),
-        user_id: userData.user[0]._id
+        user_id: userData.user._id
       }
     })
 

@@ -7,7 +7,7 @@ const useApiRequest = () => {
   const [error, setError] = useState("");
 
 
-  const useFetch = async (config: AxiosRequestConfig) => {
+  const useAxios = async (config: AxiosRequestConfig) => {
     await axios.request(config)
       .then(response => setResults(response))
       .catch(err => setError(err))
@@ -16,7 +16,7 @@ const useApiRequest = () => {
 
 
 
-  return [results, error, loading, useFetch];
+  return [results, error, loading, useAxios];
 };
 
 export default useApiRequest;

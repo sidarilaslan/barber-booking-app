@@ -14,7 +14,7 @@ import { ActivityIndicator, StatusBar } from 'react-native';
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [filteredServices, setFilteredServices] = useState(data);
-  const [results, error, loading, useFetch] = useApiRequest();
+  const [results, error, loading, useAxios] = useApiRequest();
 
   const renderService = ({ item }) => (
     <ServiceCard
@@ -29,7 +29,7 @@ const Home = ({ navigation }) => {
     />
   );
   useEffect(() => {
-    useFetch({
+    useAxios({
       url: 'http://10.0.2.2:5000/service',
       method: 'get'
     });

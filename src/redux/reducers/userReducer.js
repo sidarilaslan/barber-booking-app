@@ -5,7 +5,7 @@ import axios from "axios";
 
 export const setUserData = createAsyncThunk("user/fetchUserData", async (phoneNumber) => {
     const user = await axios.get(`http://10.0.2.2:5000/user?phoneNumber=${phoneNumber}`);
-    return user.data;
+    return user.data[0];
 });
 
 const userSlice = createSlice({

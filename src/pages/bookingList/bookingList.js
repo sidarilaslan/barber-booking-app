@@ -11,12 +11,12 @@ import styles from "./bookingList.style";
 const BookingList = (props) => {
     const [data, setData] = useState([]);
     const userData = useSelector((state) => state.user);
-    [results, error, loading, useFetch] = useApiRequest();
+    [results, error, loading, useAxios] = useApiRequest();
 
     useEffect(() => {
         if (userData.user) {
-            useFetch({
-                url: `http://10.0.2.2:5000/booking?user_id=${userData.user[0]._id}`,
+            useAxios({
+                url: `http://10.0.2.2:5000/booking?user_id=${userData.user._id}`,
                 method: 'get'
             });
         }
