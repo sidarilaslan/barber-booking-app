@@ -1,28 +1,33 @@
-import React, { useState, useEffect, } from 'react';
-import { Image, View, ActivityIndicator } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import auth from '@react-native-firebase/auth';
-import { Center, Button, Input, Stack, NativeBaseProvider, Spinner } from 'native-base';
-import { Formik } from 'formik';
+import React, {useState, useEffect} from 'react';
+import {Image, View, ActivityIndicator} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import auth, {firebase} from '@react-native-firebase/auth';
+import {
+  Center,
+  Button,
+  Input,
+  Stack,
+  NativeBaseProvider,
+  Spinner,
+} from 'native-base';
+import {Formik} from 'formik';
 import styles from './login.style';
-import { setUserData } from '../../../redux/reducers/userReducer';
+import {setUserData} from '../../../redux/reducers/userReducer';
+
 const Login = props => {
-
-
-  const navigateToHome = () => props.navigation.navigate('mainStack', { screen: "homeStack" });
+  const navigateToHome = () =>
+    props.navigation.navigate('mainStack', {screen: 'homeStack'});
 
   const [numberVerification, setnumberVerification] = useState(false);
   const [codeVerification, setcodeVerification] = useState(false);
   const [confirm, setConfirm] = useState(null);
   const dispatch = useDispatch();
 
-
-  const handleLogin = async (values) => {
+  const handleLogin = async values => {
     if (!confirm) {
       setnumberVerification(true);
       await signInWithPhoneNumber(`+90 ${values.phoneNumber}`);
       setnumberVerification(false);
-
     } else {
       setcodeVerification(true);
       const isConfirm = await confirmCode(values.code);
@@ -34,22 +39,12 @@ const Login = props => {
     }
   };
 
-  const onAuthStateChanged = (user) => {
-    if (user) {
-    }
-  };
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
-  const signInWithPhoneNumber = async (phoneNumber) => {
+  const signInWithPhoneNumber = async phoneNumber => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     setConfirm(confirmation);
-  }
+  };
 
-  const confirmCode = async (code) => {
+  const confirmCode = async code => {
     try {
       await confirm.confirm(code);
       return true;
@@ -61,7 +56,7 @@ const Login = props => {
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
-        <Center >
+        <Center>
           <Image source={require('../../../assets/images/login-logo.png')} />
           <Formik
             initialValues={{
@@ -69,7 +64,7 @@ const Login = props => {
               code: '',
             }}
             onSubmit={handleLogin}>
-            {({ handleChange, handleSubmit, values }) => (
+            {({handleChange, handleSubmit, values}) => (
               <Stack space={4} maxW="500px">
                 {confirm ? (
                   <>
@@ -89,7 +84,11 @@ const Login = props => {
                       style={styles.button}
                       disabled={codeVerification}
                       onPress={handleSubmit}>
-                      {codeVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send code"}
+                      {codeVerification ? (
+                        <ActivityIndicator size="small" color="#FFFFFF" />
+                      ) : (
+                        'send code'
+                      )}
                     </Button>
                   </>
                 ) : (
@@ -109,9 +108,12 @@ const Login = props => {
                       borderRadius={'xl'}
                       style={styles.button}
                       onPress={handleSubmit}
-                      disabled={numberVerification}
-                    >
-                      {numberVerification ? <ActivityIndicator size="small" color="#FFFFFF" /> : "send"}
+                      disabled={numberVerification}>
+                      {numberVerification ? (
+                        <ActivityIndicator size="small" color="#FFFFFF" />
+                      ) : (
+                        'send'
+                      )}
                     </Button>
                   </>
                 )}
@@ -120,7 +122,7 @@ const Login = props => {
           </Formik>
         </Center>
       </View>
-    </NativeBaseProvider >
+    </NativeBaseProvider>
   );
 };
 

@@ -1,5 +1,11 @@
 import React from 'react';
-import {Image, StatusBar, Text, View} from 'react-native';
+import {
+  Image,
+  StatusBar,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import styles from './serviceDetail.style';
 import CustomButton from '../../components/customButton';
 import {NativeBaseProvider} from 'native-base';
@@ -8,19 +14,14 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 const ServiceDetail = ({route, navigation}) => {
   const service = route.params;
 
-  const imageUrl =
-    'https://images.unsplash.com/photo-1621607512022-6aecc4fed814?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3MjAxN3wwfDF8c2VhcmNofDIxfHxiYXJiZXJ8ZW58MHx8fHwxNjg0NDg2MTU3fDA&ixlib=rb-4.0.3&q=85&q=85&fmt=jpg&crop=entropy&cs=tinysrgb&w=450';
+  const image = require('../../assets/images/service-detail.png');
+
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
         <StatusBar backgroundColor="black" barStyle={'light-content'} />
         <View style={styles.inner_container}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: imageUrl,
-            }}
-          />
+          <Image style={styles.image} source={image} />
           <View style={styles.service_info_container}>
             <View style={styles.service_header}>
               <Text style={styles.service_title}>{service.name}</Text>
@@ -58,6 +59,16 @@ const ServiceDetail = ({route, navigation}) => {
             <Icon name={'money-bill-wave'} size={30} color={'#2e6fb4'} solid />
             <Text style={styles.text_price}>{service.price} TL</Text>
           </View>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              console.log('dwqfqw');
+              navigation.navigate('mapScreen');
+            }}>
+            <View style={styles.duration_view}>
+              <Icon name={'map-marker-alt'} size={30} color={'#2e6fb4'} solid />
+              <Text style={styles.text_price}>{'Konum'}</Text>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
 
         <CustomButton

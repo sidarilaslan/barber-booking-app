@@ -1,7 +1,10 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  getFocusedRouteNameFromRoute,
+  NavigationContainer,
+} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import introComponent from '../pages/intro';
 import loginComponent from '../pages/auth/login';
 import registerComponent from '../pages/auth/register';
@@ -9,9 +12,10 @@ import homeComponent from '../pages/home';
 import serviceDetailComponent from '../pages/serviceDetail';
 import bookingComponent from '../pages/booking';
 import bookingSuccess from '../pages/bookingSuccess';
-import bookingListComponent from "../pages/bookingList";
+import bookingListComponent from '../pages/bookingList';
+import mapComponent from '../pages/map';
+import profileComponent from '../pages/profile';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,43 +38,60 @@ const HomeStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="homeScreen" component={homeComponent} />
-      <Stack.Screen name="serviceDetailScreen" component={serviceDetailComponent} />
+      <Stack.Screen
+        name="serviceDetailScreen"
+        component={serviceDetailComponent}
+      />
       <Stack.Screen name="bookingScreen" component={bookingComponent} />
       <Stack.Screen name="bookingSuccess" component={bookingSuccess} />
+      <Stack.Screen name="mapScreen" component={mapComponent} />
+      <Stack.Screen name="bookingListScreen" component={bookingListComponent} />
     </Stack.Navigator>
-  )
-}
+  );
+};
+
 
 const MainStack = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
 
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
           if (route.name === 'homeStack') {
-            iconName = focused
-              ? 'home'
-              : 'home-outline';
-          } else if (route.name === 'bookingListScreen') {
-            iconName = focused ? 'list' : 'list-outline';
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'profileScreen') {
+            iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'green',
         tabBarInactiveTintColor: 'gray',
-      })}
-    >
-      <Tab.Screen name="homeStack" component={HomeStack} options={{ title: "Home" }} />
-      <Tab.Screen name="bookingListScreen" component={bookingListComponent} options={{ title: "Bookings" }} />
+      })}>
+      <Tab.Screen
+        name="homeStack"
+        component={HomeStack}
+        options={({route}) => ({
+          title: 'Home',
+          tabBarStyle: (currentRoute => {
+            const routeName = getFocusedRouteNameFromRoute(currentRoute);
+            if (routeName === 'mapScreen') {
+              return {display: 'none'};
+            }
+          })(route),
+        })}
+      />
+      <Tab.Screen
+        name="profileScreen"
+        component={profileComponent}
+        options={{title: 'Profile'}}
+      />
     </Tab.Navigator>
   );
 };
-
-
 
 const AppNavigator = () => {
   return (
