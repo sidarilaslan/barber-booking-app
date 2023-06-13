@@ -15,6 +15,7 @@ import bookingSuccess from '../pages/bookingSuccess';
 import bookingListComponent from '../pages/bookingList';
 import mapComponent from '../pages/map';
 import profileComponent from '../pages/profile';
+import bookingDetailComponent from '../pages/bookingDetail';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,10 @@ const ProfileStack = () => {
       }}>
       <Stack.Screen name="profileScreen" component={profileComponent} />
       <Stack.Screen name="bookingListScreen" component={bookingListComponent} />
+      <Stack.Screen
+        name="bookingDetailScreen"
+        component={bookingDetailComponent}
+      />
     </Stack.Navigator>
   );
 };

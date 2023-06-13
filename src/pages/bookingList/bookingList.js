@@ -39,6 +39,17 @@ const BookingList = ({route, navigation}) => {
       stylistName={`${item.worker_id.user_id.name} ${item.worker_id.user_id.lastName}`}
       bookingDate={item.date}
       bookingHour={item.hour}
+      onClick={() => {
+        const booking = {
+          serviceName: item.name,
+          stylistFullName: `${item.worker_id.user_id.name} ${item.worker_id.user_id.lastName}`,
+          bookingDate: item.date,
+          bookingTime: item.hour,
+          stylistPhoneNumber: item.worker_id.user_id.phoneNumber,
+          requests: item.requests,
+        };
+        navigation.navigate('bookingDetailScreen', booking);
+      }}
     />
   );
 

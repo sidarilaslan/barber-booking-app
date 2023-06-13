@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, Text} from 'react-native';
+import { View, Image, Text, TouchableWithoutFeedback } from "react-native";
 import styles from './bookingCard.style';
 
 const BookingCard = props => {
@@ -10,30 +10,32 @@ const BookingCard = props => {
   });
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={{uri: props.imageUrl}}
-        style={styles.image}
-        alt="Stylist Photo"
-      />
-      <View style={styles.info_container}>
-        <Text style={styles.service_name}>{props.serviceName}</Text>
-        <Text>
-          {'Berber :'}
-          {props.stylistName}
-        </Text>
-        <View>
+    <TouchableWithoutFeedback onPress={props.onClick}>
+      <View style={styles.container}>
+        <Image
+          source={{uri: props.imageUrl}}
+          style={styles.image}
+          alt="Stylist Photo"
+        />
+        <View style={styles.info_container}>
+          <Text style={styles.service_name}>{props.serviceName}</Text>
           <Text>
-            {'Tarih:'}
-            {localDate}
+            {'Berber :'}
+            {props.stylistName}
           </Text>
-          <Text>
-            {'Saat:'}
-            {props.bookingHour}
-          </Text>
+          <View>
+            <Text>
+              {'Tarih:'}
+              {localDate}
+            </Text>
+            <Text>
+              {'Saat:'}
+              {props.bookingHour}
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
