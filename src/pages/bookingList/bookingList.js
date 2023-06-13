@@ -21,7 +21,7 @@ const BookingList = ({route, navigation}) => {
 
   useEffect(() => {
     useAxios({
-      url: `http://192.168.1.38:5000/booking?user_id=${route.params._id}`,
+      url: `http://192.168.1.43:5000/booking?user_id=${route.params._id}`,
       method: 'get',
     });
   });

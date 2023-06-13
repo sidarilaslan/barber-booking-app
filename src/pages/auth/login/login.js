@@ -87,7 +87,7 @@ const Login = props => {
                       {codeVerification ? (
                         <ActivityIndicator size="small" color="#FFFFFF" />
                       ) : (
-                        'send code'
+                        'Gönder'
                       )}
                     </Button>
                   </>
@@ -95,7 +95,7 @@ const Login = props => {
                   <>
                     <Input
                       variant="rounded"
-                      placeholder="Phone Number"
+                      placeholder="Telefon Numarası"
                       value={values.phoneNumber}
                       onChangeText={handleChange('phoneNumber')}
                       w={{
@@ -112,7 +112,7 @@ const Login = props => {
                       {numberVerification ? (
                         <ActivityIndicator size="small" color="#FFFFFF" />
                       ) : (
-                        'send'
+                        'Gönder'
                       )}
                     </Button>
                   </>

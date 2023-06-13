@@ -1,12 +1,12 @@
 import React from 'react';
-import { StatusBar, Text, View, ScrollView } from 'react-native';
+import {StatusBar, Text, View, ScrollView} from 'react-native';
 import styles from './bookingSuccess.style';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { NativeBaseProvider } from 'native-base';
+import {NativeBaseProvider} from 'native-base';
 import ItemWithDivier from '../../components/itemWithDivider';
 import CustomButton from '../../components/customButton';
 
-const BookingSuccess = ({ route, navigation }) => {
+const BookingSuccess = ({route, navigation}) => {
   const {
     serviceName,
     stylistFullName,

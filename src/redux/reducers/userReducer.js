@@ -6,7 +6,7 @@ export const setUserData = createAsyncThunk(
   'user/fetchUserData',
   async phoneNumber => {
     const user = await axios.get(
-      `http://192.168.1.38:5000/user?phoneNumber=${phoneNumber}`,
+      `http://192.168.1.43:5000/user?phoneNumber=${phoneNumber}`,
     );
     return user.data[0];
   },

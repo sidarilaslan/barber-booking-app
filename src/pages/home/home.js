@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import useApiRequest from '../../hooks/useApiRequest';
 import {
   FlatList,
@@ -9,14 +9,14 @@ import {
   NativeBaseProvider,
 } from 'native-base';
 import ServiceCard from '../../components/serviceCard';
-import { ActivityIndicator, StatusBar } from 'react-native';
+import {ActivityIndicator, StatusBar} from 'react-native';
 
-const Home = ({ navigation }) => {
+const Home = ({navigation}) => {
   const [data, setData] = useState([]);
   const [filteredServices, setFilteredServices] = useState(data);
   const [results, error, loading, useAxios] = useApiRequest();
 
-  const renderService = ({ item }) => (
+  const renderService = ({item}) => (
     <ServiceCard
       imageUrl={item.worker_id.imageUrl}
       serviceName={item.name}
@@ -30,8 +30,8 @@ const Home = ({ navigation }) => {
   );
   useEffect(() => {
     useAxios({
-      url: 'http://192.168.1.38:5000/service',
-      method: 'get'
+      url: 'http://192.168.1.43:5000/service',
+      method: 'get',
     });
   }, []);
 
@@ -55,7 +55,7 @@ const Home = ({ navigation }) => {
         <StatusBar backgroundColor="white" barStyle={'dark-content'} />
         <Input
           onChangeText={handleSearch}
-          placeholder="Search"
+          placeholder="Servis Ara"
           margin={4}
           fontSize={16}
           variant="filled"
@@ -63,7 +63,7 @@ const Home = ({ navigation }) => {
           backgroundColor="#f1f1f1"
           InputLeftElement={<SearchIcon marginLeft={4} size={6} />}
         />
-        <Heading marginLeft={4}>Services</Heading>
+        <Heading marginLeft={4}>Servisler</Heading>
         {loading ? (
           <ActivityIndicator />
         ) : (

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Image, View} from 'react-native';
+import {Image, StatusBar, View} from 'react-native';
 import {Center, Button, NativeBaseProvider} from 'native-base';
 import styles from './intro.style';
 import Loading from '../../components/loading';
@@ -21,11 +21,11 @@ const Intro = props => {
       auth().onAuthStateChanged(user => {
         if (user) {
           dispatch(setUserData(user.phoneNumber.replace('+90', '')));
-          console.log('cfffffffffffergerh54h4');
+
           navigateToHome();
         }
       });
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timer);
   });
@@ -33,6 +33,7 @@ const Intro = props => {
   return (
     <NativeBaseProvider>
       <View style={styles.container}>
+        <StatusBar backgroundColor="white" barStyle={'dark-content'} />
         {loading ? (
           <Loading />
         ) : (
@@ -44,14 +45,14 @@ const Intro = props => {
                 borderRadius={'2xl'}
                 style={styles.button}
                 onPress={navigateToLogin}>
-                Login
+                Giriş Yap
               </Button>
               <Button
                 variant="outline"
                 colorScheme="success"
                 borderRadius={'2xl'}
                 onPress={navigateToRegister}>
-                Register
+                Kayıt Ol
               </Button>
             </View>
           </Center>

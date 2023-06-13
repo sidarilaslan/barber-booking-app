@@ -50,6 +50,17 @@ const HomeStack = () => {
   );
 };
 
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="profileScreen" component={profileComponent} />
+      <Stack.Screen name="bookingListScreen" component={bookingListComponent} />
+    </Stack.Navigator>
+  );
+};
 
 const MainStack = () => {
   return (
@@ -62,7 +73,7 @@ const MainStack = () => {
 
           if (route.name === 'homeStack') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'profileScreen') {
+          } else if (route.name === 'profileStack') {
             iconName = focused ? 'person-circle' : 'person-circle-outline';
           }
 
@@ -75,7 +86,7 @@ const MainStack = () => {
         name="homeStack"
         component={HomeStack}
         options={({route}) => ({
-          title: 'Home',
+          title: 'Anasayfa',
           tabBarStyle: (currentRoute => {
             const routeName = getFocusedRouteNameFromRoute(currentRoute);
             if (routeName === 'mapScreen') {
@@ -85,9 +96,9 @@ const MainStack = () => {
         })}
       />
       <Tab.Screen
-        name="profileScreen"
-        component={profileComponent}
-        options={{title: 'Profile'}}
+        name="profileStack"
+        component={ProfileStack}
+        options={{title: 'Profil'}}
       />
     </Tab.Navigator>
   );

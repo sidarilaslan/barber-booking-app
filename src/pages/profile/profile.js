@@ -10,9 +10,7 @@ const Profile = props => {
   const userData = useSelector(state => state.user);
   const user = auth().currentUser;
 
-  useEffect(() => {
-    console.log(userData.user + 'x*******************freğglerplg');
-  }, [userData]);
+  useEffect(() => {}, [userData]);
 
   return (
     <NativeBaseProvider>
