@@ -30,15 +30,20 @@ const ServiceDetail = ({route, navigation}) => {
                 <Text style={styles.point}>{service.worker_id.points}</Text>
               </View>
             </View>
-            <View style={styles.username_view}>
-              <Icon name={'user'} size={20} color={'#000000'} solid />
-              <Text style={styles.stylist_name}>
-                {service.worker_id.user_id.name +
-                  ' ' +
-                  service.worker_id.user_id.lastName}{' '}
-              </Text>
-              <Text>(Stylist)</Text>
-            </View>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('stylistDetailScreen', service.worker_id);
+              }}>
+              <View style={styles.username_view}>
+                <Icon name={'user'} size={20} color={'#000000'} solid />
+                <Text style={styles.stylist_name}>
+                  {service.worker_id.user_id.name +
+                    ' ' +
+                    service.worker_id.user_id.lastName}{' '}
+                </Text>
+                <Text>(Stylist)</Text>
+              </View>
+            </TouchableWithoutFeedback>
             <View style={styles.availability_view}>
               <Icon name={'check'} size={20} color={'#4BB543'} solid />
               <Text style={styles.stylist_availability}>Müsait</Text>

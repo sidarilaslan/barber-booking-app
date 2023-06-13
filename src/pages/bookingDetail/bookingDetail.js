@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, StatusBar, Text, View} from 'react-native';
 import styles from '../bookingSuccess/bookingSuccess.style';
 import ItemWithDivier from '../../components/itemWithDivider';
 import {NativeBaseProvider} from 'native-base';
@@ -16,6 +16,7 @@ const BookingDetail = ({route}) => {
 
   return (
     <NativeBaseProvider>
+      <StatusBar backgroundColor="white" barStyle={'dark-content'} />
       <ScrollView style={styles.container}>
         <View>
           <View style={styles.booking_detail}>
