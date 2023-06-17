@@ -8,9 +8,6 @@ const UserCard = props => {
             <View style={styles.card_container}>
                 <View >
                     <Text style={styles.title} >{props.customerFullName}</Text>
-                    <View>
-                        <Text style={styles.phoneNumber}>{"Telefon: "}{props.phoneNumber}</Text>
-                    </View>
                 </View>
             </View>
         </TouchableWithoutFeedback>

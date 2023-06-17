@@ -10,11 +10,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 const Home = props => {
     return (
         <NativeBaseProvider>
-
             <View style={styles.container}>
-
                 <TouchableWithoutFeedback
                     onPress={() => {
+                        props.navigation.navigate('adminBookingListScreen');
                     }}>
                     <View style={styles.card_settings}>
                         <Ionicons name={"reader-outline"} size={50} color={"#2e6fb4"} />
@@ -25,6 +24,7 @@ const Home = props => {
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
                     onPress={() => {
+                        props.navigation.navigate('adminUserListScreen');
                     }}>
                     <View style={styles.card_settings}>
                         <Ionicons name={"people-outline"} size={50} color={"#2e6fb4"} />
@@ -35,6 +35,7 @@ const Home = props => {
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback
                     onPress={() => {
+                        props.navigation.navigate('adminWorkerListScreen');
                     }}>
                     <View style={styles.card_settings}>
                         <Ionicons name={"cut-outline"} size={50} color={"#2e6fb4"} />

@@ -14,8 +14,5 @@ export default StyleSheet.create({
         fontSize: 20,
         color: "black"
     },
-    phoneNumber: {
-        color: "black"
-    },
 
 });

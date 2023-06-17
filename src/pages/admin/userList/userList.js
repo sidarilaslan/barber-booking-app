@@ -1,30 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import {
-    FlatList,
-    Image,
-    ScrollView,
-    StatusBar,
-    Text,
-    TextInput,
-    View,
-} from 'react-native';
+import { FlatList, View } from 'react-native';
 import { NativeBaseProvider, Input, SearchIcon } from 'native-base';
 import useApiRequest from '../../../hooks/useApiRequest';
-import styles from './userList.style';
 import UserCard from '../../../components/admin/userCard/userCard';
+import styles from './userList.style'
 
-const UserList = ({ route, navigation }) => {
+const UserList = (props) => {
     const [data, setData] = useState([]);
     const [filteredUsers, setfilteredUsers] = useState(data);
 
     const [results, error, loading, useAxios] = useApiRequest();
-
-    useEffect(() => {
-        useAxios({
-            url: `http://10.0.2.2:5000/user?role=user`,
-            method: 'get',
-        });
-    }, []);
 
     useEffect(() => {
         if (results?.data) {
@@ -33,23 +18,35 @@ const UserList = ({ route, navigation }) => {
         }
     }, [results?.data]);
 
-    const handleSearch = query => {
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            useAxios({
+                url: `http://10.0.2.2:5000/user?role=user`,
+                method: 'get',
+            });
+        });
+        return unsubscribe;
+    }, []);
 
+    const handleSearch = query => {
         const filtered = data.filter(filteredUsers => {
             const fullName = `${filteredUsers.name} ${filteredUsers.lastName}`;
             return fullName.toLowerCase().includes(query.toLowerCase());
         });
 
         setfilteredUsers(filtered);
-
     };
 
     const renderUserList = ({ item }) => (
         <UserCard
             customerFullName={`${item.name} ${item.lastName}`}
-            phoneNumber={item.phoneNumber}
             onClick={() => {
-                console.log("clicked");
+                props.navigation.navigate('userDetailScreen', {
+                    fullName: `${item.name} ${item.lastName}`,
+                    phoneNumber: item.phoneNumber,
+                    createdAt: item.createdAt,
+                    id: item._id
+                });
             }}
         />
     );

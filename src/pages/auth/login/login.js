@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {Image, View, ActivityIndicator} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import auth, {firebase} from '@react-native-firebase/auth';
+import React, { useState, useEffect } from 'react';
+import { Image, View, ActivityIndicator } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import auth, { firebase } from '@react-native-firebase/auth';
 import {
   Center,
   Button,
@@ -10,13 +10,19 @@ import {
   NativeBaseProvider,
   Spinner,
 } from 'native-base';
-import {Formik} from 'formik';
+import { Formik } from 'formik';
 import styles from './login.style';
-import {setUserData} from '../../../redux/reducers/userReducer';
+import { setUser } from '../../../redux/reducers/userReducer';
+import axios from 'axios';
 
 const Login = props => {
-  const navigateToHome = () =>
-    props.navigation.navigate('mainStack', {screen: 'homeStack'});
+  const navigateToHome = (userRole) => {
+    if (userRole == "admin")
+      props.navigation.navigate('adminStack', { screen: 'adminHomeScreen' });
+    else
+      props.navigation.navigate('mainStack', { screen: 'homeStack' });
+
+  }
 
   const [numberVerification, setnumberVerification] = useState(false);
   const [codeVerification, setcodeVerification] = useState(false);
@@ -26,18 +32,26 @@ const Login = props => {
   const handleLogin = async values => {
     if (!confirm) {
       setnumberVerification(true);
-      await signInWithPhoneNumber(`+90 ${values.phoneNumber}`);
+      await signIn(values.phoneNumber);
       setnumberVerification(false);
     } else {
       setcodeVerification(true);
       const isConfirm = await confirmCode(values.code);
       setcodeVerification(false);
       if (isConfirm) {
-        dispatch(setUserData(values.phoneNumber));
-        navigateToHome();
+        const userData = await fetchUserData(values.phoneNumber);
+        dispatch(setUser(userData));
+        navigateToHome(userData.role);
       }
     }
   };
+  const fetchUserData = async (phoneNumber) => {
+    const { data } = await axios.get(`http://10.0.2.2:5000/user?phoneNumber=${phoneNumber}`);
+    return data[0];
+  }
+  const signIn = async (phoneNumber) => {
+    await signInWithPhoneNumber(`+90 ${phoneNumber}`);
+  }
 
   const signInWithPhoneNumber = async phoneNumber => {
     const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
@@ -48,7 +62,7 @@ const Login = props => {
     try {
       await confirm.confirm(code);
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   };
@@ -64,7 +78,7 @@ const Login = props => {
               code: '',
             }}
             onSubmit={handleLogin}>
-            {({handleChange, handleSubmit, values}) => (
+            {({ handleChange, handleSubmit, values }) => (
               <Stack space={4} maxW="500px">
                 {confirm ? (
                   <>

@@ -46,7 +46,6 @@ const UserList = ({ route, navigation }) => {
     const renderUserList = ({ item }) => (
         <UserCard
             customerFullName={`${item.user_id.name} ${item.user_id.lastName}`}
-            phoneNumber={item.user_id.phoneNumber}
             onClick={() => {
                 console.log("clicked");
             }}
