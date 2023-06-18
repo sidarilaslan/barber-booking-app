@@ -20,10 +20,13 @@ const BookingList = ({ route, navigation }) => {
     const [results, error, loading, useAxios] = useApiRequest();
 
     useEffect(() => {
-        useAxios({
-            url: `http://10.0.2.2:5000/booking`,
-            method: 'get',
+        const unsubscribe = navigation.addListener('focus', () => {
+            useAxios({
+                url: `http://10.0.2.2:5000/booking`,
+                method: 'get',
+            });
         });
+        return unsubscribe;
     }, []);
 
     useEffect(() => {
@@ -43,6 +46,14 @@ const BookingList = ({ route, navigation }) => {
             isDone={item.isDone}
             onClick={
                 () => {
+                    navigation.navigate("adminBookingDetailScreen",
+                        {
+                            id: item._id,
+                            serviceName: item.name,
+                            phoneNumber: item.user_id.phoneNumber,
+                            requests: item.requests
+
+                        });
 
                 }
             }

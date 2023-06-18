@@ -51,7 +51,7 @@ const Home = props => {
                     onClick={async () => {
                         await auth().signOut();
                         props.navigation.navigate('welcomeStack', {
-                            screen: 'loginScreen',
+                            screen: 'introScreen',
                         });
                     }}
                 />

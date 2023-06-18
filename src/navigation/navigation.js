@@ -23,6 +23,7 @@ import adminHomeComponent from '../pages/admin/home';
 import adminUserListComponent from '../pages/admin/userList';
 import adminWorkerListComponent from '../pages/admin/workerList';
 import userDetailComponent from '../pages/admin/userDetail';
+import adminBookingDetailComponent from '../pages/admin/bookingDetail';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const WelcomeStack = () => {
@@ -72,6 +73,8 @@ const AdminStack = () => {
       <Stack.Screen name="userDetailScreen" component={userDetailComponent} />
       <Stack.Screen name="bookingListScreen" component={bookingListComponent} />
       <Stack.Screen name="bookingDetailScreen" component={bookingDetailComponent} />
+      <Stack.Screen name="adminBookingDetailScreen" component={adminBookingDetailComponent} />
+
 
     </Stack.Navigator>
   );
