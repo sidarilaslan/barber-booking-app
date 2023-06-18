@@ -3,8 +3,8 @@ import {
   getFocusedRouteNameFromRoute,
   NavigationContainer,
 } from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import introComponent from '../pages/intro';
 import loginComponent from '../pages/auth/login';
 import registerComponent from '../pages/auth/register';
@@ -18,7 +18,12 @@ import profileComponent from '../pages/profile';
 import bookingDetailComponent from '../pages/bookingDetail';
 import stylistDetailComponent from '../pages/stylistDetail';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import adminBookingListComponent from '../pages/admin/bookingList';
+import adminHomeComponent from '../pages/admin/home';
+import adminUserListComponent from '../pages/admin/userList';
+import adminWorkerListComponent from '../pages/admin/workerList';
+import userDetailComponent from '../pages/admin/userDetail';
+import adminBookingDetailComponent from '../pages/admin/bookingDetail';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const WelcomeStack = () => {
@@ -54,7 +59,26 @@ const HomeStack = () => {
     </Stack.Navigator>
   );
 };
+const AdminStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="adminHomeScreen" component={adminHomeComponent} />
+      <Stack.Screen name="adminBookingListScreen" component={adminBookingListComponent} />
+      <Stack.Screen name="adminUserListScreen" component={adminUserListComponent} />
+      <Stack.Screen name="adminWorkerListScreen" component={adminWorkerListComponent} />
 
+      <Stack.Screen name="userDetailScreen" component={userDetailComponent} />
+      <Stack.Screen name="bookingListScreen" component={bookingListComponent} />
+      <Stack.Screen name="bookingDetailScreen" component={bookingDetailComponent} />
+      <Stack.Screen name="adminBookingDetailScreen" component={adminBookingDetailComponent} />
+
+
+    </Stack.Navigator>
+  );
+};
 const ProfileStack = () => {
   return (
     <Stack.Navigator
@@ -74,10 +98,10 @@ const ProfileStack = () => {
 const MainStack = () => {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         headerShown: false,
 
-        tabBarIcon: ({focused, color, size}) => {
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           if (route.name === 'homeStack') {
@@ -94,12 +118,12 @@ const MainStack = () => {
       <Tab.Screen
         name="homeStack"
         component={HomeStack}
-        options={({route}) => ({
+        options={({ route }) => ({
           title: 'Anasayfa',
           tabBarStyle: (currentRoute => {
             const routeName = getFocusedRouteNameFromRoute(currentRoute);
             if (routeName === 'mapScreen') {
-              return {display: 'none'};
+              return { display: 'none' };
             }
           })(route),
         })}
@@ -107,7 +131,7 @@ const MainStack = () => {
       <Tab.Screen
         name="profileStack"
         component={ProfileStack}
-        options={{title: 'Profil'}}
+        options={{ title: 'Profil' }}
       />
     </Tab.Navigator>
   );
@@ -121,6 +145,7 @@ const AppNavigator = () => {
           headerShown: false,
         }}>
         <Stack.Screen name="welcomeStack" component={WelcomeStack} />
+        <Stack.Screen name="adminStack" component={AdminStack} />
         <Stack.Screen name="mainStack" component={MainStack} />
       </Stack.Navigator>
     </NavigationContainer>

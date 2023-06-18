@@ -1,16 +1,17 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const setUserData = createAsyncThunk(
   'user/fetchUserData',
   async phoneNumber => {
     const user = await axios.get(
-      `http://192.168.1.43:5000/user?phoneNumber=${phoneNumber}`,
+      `http://10.0.2.2:5000/user?phoneNumber=${phoneNumber}`,
     );
     return user.data[0];
   },
 );
+
 
 const userSlice = createSlice({
   name: 'user',
@@ -22,6 +23,10 @@ const userSlice = createSlice({
     clearUser: state => {
       return null;
     },
+    getUserRole: state => {
+      const userRole = state.user?.role || '';
+      return userRole;
+    },
   },
   extraReducers: builder => {
     builder
@@ -32,6 +37,7 @@ const userSlice = createSlice({
       .addCase(setUserData.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
+        state.user.role = action.payload.role;
       })
       .addCase(setUserData.rejected, (state, action) => {
         state.loading = false;
@@ -40,5 +46,5 @@ const userSlice = createSlice({
   },
 });
 
-export const {setUser, clearUser} = userSlice.actions;
+export const { setUser, clearUser, getUserRole } = userSlice.actions;
 export default userSlice.reducer;
